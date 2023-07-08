@@ -1,11 +1,11 @@
 {
-  "name": "@askldd/react-table",
-  "version": "0.0.1",
+  "name": "@asklddco/react-table",
+  "version": "0.0.3",
   "description": "A simple component library to demonstrate publishing to npm",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "tsc && cp package.json README.md ./dist"
+    "build": "tsc && xcopy package.json css README.md ./dist"
   },
   "repository": {
     "type": "git",
