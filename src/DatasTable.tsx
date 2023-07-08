@@ -11,6 +11,7 @@ import { useState, useEffect } from 'react'
 import { IColumnDefElement } from '../../pages/CurrentEmployees'*/
 import {createContext} from 'react'
 import * as React from "react"
+import './style/DatasTable.css'
 
 /*th : string
 datakey : string
@@ -70,7 +71,7 @@ export function DatasTable({columnsDefinition, tableDatas} : IProps){
     // console.log('search: ', searchString)
 
     return(
-        <>  
+        <div className='datasTableContainer'>  
             <DatasTableContext.Provider value={{displayRules, tableDatasState, ordering, searchString, tableColumnsNames, tableDatasKeys, setDisplayRules, setOrdering, setSearchString}}>
                 <div id="entriesNSearchContainer">
                     <NDisplayedSelect/>
@@ -82,7 +83,7 @@ export function DatasTable({columnsDefinition, tableDatas} : IProps){
                     <Pagination totalEntries={tableDatasState.length} currentPage={displayRules.currentPage} nEntriesPerPage={displayRules.nEntriesPerPage} setDisplayRules={setDisplayRules}/>
                 </div>
             </DatasTableContext.Provider>
-        </>
+        </div>
     )
 }
 
