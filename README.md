@@ -1,3 +1,1 @@
-A Custom Table for React.
-
-WIP.
+React Table Component Package (WIP)
