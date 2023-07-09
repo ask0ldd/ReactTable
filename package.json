@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist",
-    "build": "tsc && xcopy package.json css README.md ./dist"
+    "build": "tsc && xcopy .\\package.json .\\dist /y && xcopy .\\src\\style .\\dist\\style /y /e /i && xcopy .\\README.md .\\dist /y"
   },
   "repository": {
     "type": "git",

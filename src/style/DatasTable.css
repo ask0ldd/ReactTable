@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   font-family: "Jost", sans-serif;
-  font-size: 1rem;
+  font-size: 14px;
 }
 
 .datasTableContainer #entriesNSearchContainer,
@@ -16,8 +16,8 @@
   background: #f6f6f6;
   padding: 0.5em 1em 0.45em 1em;
   color: #454545;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1em;
+  /*font-family: Arial, Helvetica, sans-serif;
+  font-size: 1em;*/
 }
 
 .datasTableContainer#infosContainer {
