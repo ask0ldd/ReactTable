@@ -9,10 +9,10 @@ import * as React from "react"
  */
 function NEntries(){
 
-    const {tableDatasState, displayRules} = useContext(DatasTableContext)
+    const {tableDatasState, paginationRules} = useContext(DatasTableContext)
 
-    const firstDisplayedEntry = displayRules ? Math.abs((displayRules.currentPage-1)*displayRules.nEntriesPerPage) + 1 : 1
-    const lastDisplayedEntry =  displayRules ? Math.abs((displayRules.currentPage-1)*displayRules.nEntriesPerPage + displayRules.nEntriesPerPage) : 10
+    const firstDisplayedEntry = paginationRules ? Math.abs((paginationRules.currentPage-1)*paginationRules.nEntriesPerPage) + 1 : 1
+    const lastDisplayedEntry =  paginationRules ? Math.abs((paginationRules.currentPage-1)*paginationRules.nEntriesPerPage + paginationRules.nEntriesPerPage) : 10
     // const displayedRows = tableDatasState.slice(firstDisplayedEntry, lastDisplayedEntry).length
     const totalEntries = tableDatasState.length
 

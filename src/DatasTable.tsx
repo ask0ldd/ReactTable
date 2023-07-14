@@ -38,9 +38,9 @@ export function DatasTable({columnsDefinition, tableDatas} : IProps){
     const tableDatasKeys : Array<string> = columnsDefinition.reduce((accu : Array<string>, column) => {accu.push(column.datakey); return accu}, [])
   
     // currentPage / nEntriesPerPage / searchString / sortingDirection / sortingTargetColumn
-    const [tableDatasState, setTableDatas] = useState([...tableDatas]);
+    const [tableDatasState, setTableDatas] = useState<Array<any>>([...tableDatas]);
     const [ordering, setOrdering] = useState<IOrdering>({column : '', direction : 'asc'})
-    const [displayRules, setDisplayRules] = useState<IDisplayRules>({currentPage : 1, nEntriesPerPage : 10})
+    const [paginationRules, setPaginationRules] = useState<IPaginationRules>({currentPage : 1, nEntriesPerPage : 10})
     const [searchString, setSearchString] = useState<string>('')
   
     // react to any ordering state update
@@ -57,22 +57,25 @@ export function DatasTable({columnsDefinition, tableDatas} : IProps){
             filteredTable = [...tableDatas]
         }
         if(ordering.column === '') return setTableDatas(filteredTable)
-        if(ordering.column !== '' && ordering.direction === 'asc') return setTableDatas(filteredTable.sort((a,b) => frCollator.compare(a[ordering.column as keyof typeof tableDatas], b[ordering.column as keyof typeof tableDatas])))
-        if(ordering.column !== '' && ordering.direction === 'desc') setTableDatas(filteredTable.sort((a,b) => frCollator.compare(b[ordering.column as keyof typeof tableDatas], a[ordering.column as keyof typeof tableDatas])))
-    }, [ordering.column, ordering.direction, displayRules.currentPage, searchString])
+        const sortedColumnDef = [...columnsDefinition].filter(column => column.datakey === ordering.column)[0]
+        if(ordering.direction === 'asc' && sortedColumnDef.datatype === 'date') 
+            return setTableDatas(filteredTable.sort((a,b) => dateToTime(b[ordering.column]) - dateToTime(a[ordering.column])))
+        if(ordering.direction === 'desc' && sortedColumnDef.datatype === 'date') 
+            return setTableDatas(filteredTable.sort((a,b) => dateToTime(a[ordering.column]) - dateToTime(b[ordering.column])))
+        if(ordering.direction === 'asc') 
+            return setTableDatas(filteredTable.sort((a,b) => frCollator.compare(a[ordering.column], b[ordering.column])))
+        if(ordering.direction === 'desc') 
+            return setTableDatas(filteredTable.sort((a,b) => frCollator.compare(b[ordering.column], a[ordering.column])))
+    }, [ordering.column, ordering.direction, paginationRules.currentPage, searchString])
 
     // when typing into the searchbar, the currentpage is set back to 1
     useEffect(()=>{
-        setDisplayRules({...displayRules, currentPage : 1})
+        setPaginationRules({...paginationRules, currentPage : 1})
     }, [searchString])
 
-    // console.log('first: ', firstDisplayedEntry)
-    // console.log('last: ', lastDisplayedEntry)
-    // console.log('search: ', searchString)
-
     return(
-        <div className='datasTableContainer'>  
-            <DatasTableContext.Provider value={{displayRules, tableDatasState, ordering, searchString, tableColumnsNames, tableDatasKeys, setDisplayRules, setOrdering, setSearchString}}>
+        <>  
+            <DatasTableContext.Provider value={{paginationRules, tableDatasState, ordering, searchString, tableColumnsNames, tableDatasKeys, setPaginationRules, setOrdering, setSearchString}}>
                 <div id="entriesNSearchContainer">
                     <NDisplayedSelect/>
                     <SearchModule/>
@@ -80,21 +83,27 @@ export function DatasTable({columnsDefinition, tableDatas} : IProps){
                 <Table/>
                 <div id="infosNPaginationContainer">
                     <NEntries/>
-                    <Pagination totalEntries={tableDatasState.length} currentPage={displayRules.currentPage} nEntriesPerPage={displayRules.nEntriesPerPage} setDisplayRules={setDisplayRules}/>
+                    <Pagination totalEntries={tableDatasState.length} currentPage={paginationRules.currentPage} nEntriesPerPage={paginationRules.nEntriesPerPage} setPaginationRules={setPaginationRules}/>
                 </div>
             </DatasTableContext.Provider>
-        </div>
+        </>
     )
 }
 
+// !!! jsdoc
+function dateToTime(date : string){
+    const [day, month, year] = date.split('/')
+    return new Date(parseInt(year), parseInt(month), parseInt(day)).getTime()
+}
+
 interface IDatasTableContext{
-    displayRules? : IDisplayRules
+    paginationRules? : IPaginationRules
     tableDatasState : Array<any>
     ordering? : IOrdering
     searchString? : string
     tableColumnsNames : Array<string>
     tableDatasKeys : Array<string>
-    setDisplayRules?({currentPage, nEntriesPerPage} : IDisplayRules) : void
+    setPaginationRules?({currentPage, nEntriesPerPage} : IPaginationRules) : void
     setOrdering?({column, direction} : IOrdering) : void
     setSearchString?(string : string) : void
 }
@@ -106,7 +115,7 @@ interface IProps {
     tableDatas : Array<any>
 }
 
-interface IDisplayRules{
+interface IPaginationRules{
     currentPage : number
     nEntriesPerPage : number
 }

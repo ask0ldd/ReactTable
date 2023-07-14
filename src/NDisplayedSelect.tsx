@@ -16,7 +16,7 @@ function NDisplayedSelect()
     const NDisplayedOptions = ['10', '25', '50', '100']
     // const defaultOptionIndex = 0;
 
-    const {setDisplayRules} = useContext(DatasTableContext)
+    const {setPaginationRules} = useContext(DatasTableContext)
 
      /* should update select active option if 100 */
 
@@ -27,7 +27,7 @@ function NDisplayedSelect()
             {
                 const currentPage = 1
                 const nEntriesPerPage = e.target.value != null ? parseInt(e.target.value) : 50
-                setDisplayRules && setDisplayRules({currentPage, nEntriesPerPage})
+                setPaginationRules && setPaginationRules({currentPage, nEntriesPerPage})
             }}
         >
             {NDisplayedOptions.map((opt, index) => (<option value={parseInt(opt)} key={'opt'+index}>{opt}</option>))}
