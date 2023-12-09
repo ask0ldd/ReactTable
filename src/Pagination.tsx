@@ -1,13 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { DatasTableContext } from './DatasTableContext'
 import './style/Pagination.css'
-import * as React from "react"
-
-interface IProps{
-  currentPage: number
-  setPaginationRules: any
-  nEntriesPerPage: number
-  totalEntries: number
-}
+import { useContext } from "react"
 
 /**
  * Component : Datatable pagination.
@@ -19,29 +13,45 @@ interface IProps{
  * @param {number} props.totalEntries - Total number of entries.
  * @return ( <Pagination currentPage={currentPage} setDisplayRules={setDisplayRules} nEntriesPerPage={nEntriesPerPage} totalEntries={totalEntries}/> )
  */
-function Pagination({currentPage, setPaginationRules, nEntriesPerPage, totalEntries} : IProps) {
+function Pagination() {
 
-  function prevPage(){
-    setPaginationRules({currentPage: currentPage > 1 ? currentPage-1 : currentPage, nEntriesPerPage: nEntriesPerPage})
-  }
+    const {tableState, dispatch} = useContext(DatasTableContext)
 
-  function nextPage(){
-    setPaginationRules({currentPage: currentPage * nEntriesPerPage < totalEntries ? currentPage+1 : currentPage, nEntriesPerPage: nEntriesPerPage})
-  }
+    if(!dispatch || !tableState) return(<></>)
 
-  function enoughEntriesLeftForNextPage(){
-    return currentPage * nEntriesPerPage < totalEntries
-  }
+    const currentPage = tableState.pagination.currentPage
+    const nEntriesPerPage = tableState.pagination.nEntriesPerPage
+    const totalEntries = tableState.processedDatas.length
+    // QM = question mark
+    const enoughEntriesLeftForNextPageQM =  currentPage * nEntriesPerPage < totalEntries
 
-  return (
-      <div id="paginationContainer">
-        {currentPage > 1 && <span style={{marginRight:'0.5rem'}} onClick={() => prevPage()}>Previous</span>}
-        {currentPage > 1 && <div className="paginationInactivePage" onClick={() => prevPage()}>{currentPage-1}</div>}
-        <div className="paginationActivePage">{currentPage}</div>
-        {enoughEntriesLeftForNextPage() && <div className="paginationInactivePage" onClick={() => nextPage()}>{currentPage+1}</div>}
-        {enoughEntriesLeftForNextPage() && <span style={{marginLeft:'0.5rem'}} onClick={() => nextPage()}>Next</span>}
-      </div>
-  )
+    function prevPage(){
+      // setPaginationRules({currentPage: currentPage > 1 ? currentPage-1 : currentPage, nEntriesPerPage: nEntriesPerPage})
+      if(dispatch == null || tableState == null) return
+      dispatch({type : "pagination", payload : {...tableState.pagination, currentPage : currentPage > 1 ? currentPage-1 : currentPage}})
+    }
+
+    function nextPage(){
+      // setPaginationRules({currentPage: currentPage * nEntriesPerPage < totalEntries ? currentPage+1 : currentPage, nEntriesPerPage: nEntriesPerPage})
+      if(dispatch == null || tableState == null) return
+      dispatch({type : "pagination", payload : {...tableState.pagination, currentPage : enoughEntriesLeftForNextPageQM ? currentPage+1 : currentPage}})
+    }
+
+    return (
+        <div id="paginationContainer">
+          {currentPage > 1 && <span style={{marginRight:'0.5rem'}} onClick={() => prevPage()}>Previous</span>}
+          {currentPage > 1 && <div className="paginationInactivePage" onClick={() => prevPage()}>{currentPage-1}</div>}
+          <div className="paginationActivePage">{currentPage}</div>
+          {enoughEntriesLeftForNextPageQM && <div className="paginationInactivePage" onClick={() => nextPage()}>{currentPage+1}</div>}
+          {enoughEntriesLeftForNextPageQM && <span style={{marginLeft:'0.5rem'}} onClick={() => nextPage()}>Next</span>}
+        </div>
+    )
 }
 
 export default Pagination
+
+// !!!!!!!!!!!!!!!! 
+/*interface IProps{
+  tableState : any
+  dispatch : any
+}*/

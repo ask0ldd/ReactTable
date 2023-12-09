@@ -30,12 +30,12 @@
   cursor: pointer;
 }
 
-.paginationActivePage:hover {
+/*.paginationActivePage:hover {
   outline: 1px solid #213547;
   background: #fff;
   opacity: 1;
   box-shadow: 0px 4px 8px #61798f;
-}
+}*/
 
 .paginationInactivePage {
   background: linear-gradient(to bottom, #fff 0%, #dcdcdc 100%);
@@ -48,9 +48,17 @@
   opacity: 0.6;
 }
 
-.paginationInactivePage:hover {
+/*.paginationInactivePage:hover {
   outline: 1px solid #213547;
   background: #fff;
   opacity: 1;
   box-shadow: 0px 4px 8px #61798f;
+}*/
+.paginationActivePage:hover,
+.paginationInactivePage:hover {
+  background: #0078d7;
+  border: 1px solid #0078d7;
+  color: #fff;
+  box-shadow: 0 4px 8px #72aedf;
+  opacity: 1;
 }

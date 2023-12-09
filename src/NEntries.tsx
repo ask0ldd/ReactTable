@@ -1,6 +1,5 @@
-import { DatasTableContext } from "./DatasTable"
+import { DatasTableContext } from './DatasTableContext'
 import { useContext } from "react"
-import * as React from "react"
 
 /**
  * Component : A container displaying the number of entries in the current table.
@@ -9,12 +8,15 @@ import * as React from "react"
  */
 function NEntries(){
 
-    const {tableDatasState, paginationRules} = useContext(DatasTableContext)
+    const {tableState} = useContext(DatasTableContext)
 
-    const firstDisplayedEntry = paginationRules ? Math.abs((paginationRules.currentPage-1)*paginationRules.nEntriesPerPage) + 1 : 1
-    const lastDisplayedEntry =  paginationRules ? Math.abs((paginationRules.currentPage-1)*paginationRules.nEntriesPerPage + paginationRules.nEntriesPerPage) : 10
+    if(!tableState) return(<></>)
+
+    // !!!!! deal with Showing 1 to 0 of 0 entries
+    const firstDisplayedEntry = tableState.pagination ? Math.abs((tableState.pagination.currentPage-1)*tableState.pagination.nEntriesPerPage) + 1 : 1
+    const lastDisplayedEntry =  tableState.pagination ? Math.abs((tableState.pagination.currentPage-1)*tableState.pagination.nEntriesPerPage + tableState.pagination.nEntriesPerPage) : 10
     // const displayedRows = tableDatasState.slice(firstDisplayedEntry, lastDisplayedEntry).length
-    const totalEntries = tableDatasState.length
+    const totalEntries = tableState.processedDatas.length
 
     return(
         <div id="infosContainer">Showing {firstDisplayedEntry} to {lastDisplayedEntry < totalEntries ? lastDisplayedEntry : totalEntries} of {totalEntries} entries</div>

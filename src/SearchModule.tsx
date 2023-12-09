@@ -1,12 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import './style/SearchModule.css'
-import { DatasTableContext } from "./DatasTable"
+import { DatasTableContext } from './DatasTableContext'
 import { useContext } from "react"
-import * as React from "react"
-
-/*interface IProps{
-    setSearchString: any
-}*/
 
 /**
  * Component : Module adding a search function to the datatable.
@@ -15,12 +10,13 @@ import * as React from "react"
  */
 function SearchModule() {
 
-    const { setSearchString } = useContext(DatasTableContext)
+    const { dispatch } = useContext(DatasTableContext)
+    if(!dispatch) return(<></>)
 
     return (
         <div id="searchContainer">
         <label htmlFor='search'>Search:</label>
-        <input contentEditable id='search' type="text" onInput={(e)=> setSearchString && setSearchString(e.currentTarget.value)}/>
+        <input contentEditable id='search' type="text" onInput={(e)=> dispatch({type : "search", payload : e.currentTarget.value })}/>
         </div>
     )
     
