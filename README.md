@@ -6,7 +6,6 @@ DOCUMENTATION
 
 A - Instanciate the TableModel and give it a name :
 
-const tableModel = new TableModel({id : "current_employees"})
 <img src="/public/1-createmodel.png"/>
 
 B - Using the ColumnBuilder, add columns to this model so that it can extract the right datas out of your datas object :
@@ -15,6 +14,7 @@ const tableModel = new TableModel({id : "current_employees"})
 .tableModel.addColumn(ColumnBuilder.startBuilder().setColumnName("First Name").setDatatypeAsString().setAccessor("firstName").setSortability(true).build())
 .tableModel.addColumn(ColumnBuilder.startBuilder().setColumnName("Last Name").setDatatypeAsString().setAccessor("lastName").setSortability(true).build())
 tableModel.addColumn(ColumnBuilder.startBuilder().setColumnName("Department").setDatatypeAsString().setAccessor("department").setSortability(true).build())
+<img src="/public/2-addcolumns.png"/>
 
 Building my model that way would make this if I had, for example, this kind of datas object :
 
