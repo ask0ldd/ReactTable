@@ -7,6 +7,7 @@ DOCUMENTATION
 A - Instanciate the TableModel and give it a name :
 
 const tableModel = new TableModel({id : "current_employees"})
+<img src="1-createmodel.png"/>
 
 B - Using the ColumnBuilder, add columns to this model so that it can extract the right datas out of your datas object :
 
