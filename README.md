@@ -25,10 +25,16 @@ B - Using the ColumnBuilder, you should now add some columns to your model :
 
 As expected, with :
 
-- setColumnName() : I give a name to your column.
-- setDatatypeAsString() | setDatatypeAsNumber() | setDatatypeAsDate() : I define the type of datas that should populate your column. Here my column will be populated with strings.
+- setColumnName() : I give a name to my column.
+- setDatatypeAsString() : I define the type of datas that should populate my column. Here it should be populated with strings.
 - setAccessor() : I tell my model which key in my datas object is associated with the value needed to fill my column.
 - SetSortability() : I indicates to my model if this column should be sortable.
+
+Here are the different methods to define your datatypes :
+
+- setDatatypeAsString()
+- setDatatypeAsNumber()
+- setDatatypeAsDate()
 
 As an example, building my model that way would make sense this if I had this kind of datas object :
 
