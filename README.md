@@ -10,16 +10,11 @@ A - Instanciate the TableModel and give it a name :
 
 B - Using the ColumnBuilder, add columns to this model so that it can extract the right datas out of your datas object :
 
-const tableModel = new TableModel({id : "current_employees"})
-.tableModel.addColumn(ColumnBuilder.startBuilder().setColumnName("First Name").setDatatypeAsString().setAccessor("firstName").setSortability(true).build())
-.tableModel.addColumn(ColumnBuilder.startBuilder().setColumnName("Last Name").setDatatypeAsString().setAccessor("lastName").setSortability(true).build())
-tableModel.addColumn(ColumnBuilder.startBuilder().setColumnName("Department").setDatatypeAsString().setAccessor("department").setSortability(true).build())
 <img src="/public/2-addcolumns.png"/>
 
 Building my model that way would make this if I had, for example, this kind of datas object :
 
-const usersDatasTen = [{"firstName":"Dawn","lastName":"Greenshiels","street":"3 Center Pass","city":"Houston","zipCode":"77255","state":"TX","birthDate":"01/07/2022","startingDate":"20/05/2023","department":"Human Ressources"},
-{"firstName":"Artemas","lastName":"FitzAlan","street":"9334 Forest Road","city":"Greensboro","zipCode":"27415","state":"NC","birthDate":"07/12/2022","startingDate":"26/09/2022","department":"Human Ressources"}]
+<img src="/public/3-userdatas.png"/>
 
 My goal would then be :
 
