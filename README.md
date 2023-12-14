@@ -2,17 +2,26 @@ React Table Component Package (WIP)
 
 DOCUMENTATION
 
-## Step 1 - Build your Table Model into the page component hosting your table
+## Step 1 - Build your Table Model
+
+Let's build this model into the page component that will host your react table.
 
 A - Instanciate the TableModel and give it a name :
 
 <img src="/public/1-createmodel.png"/>
 
-B - Using the ColumnBuilder, add columns to this model so that it can extract the right datas out of your datas object :
+This model will be key in order to define the following properties :
+
+- Which datas should be extracted from your datas object.
+- Which types are those datas.
+- Which name to give to your columns.
+- Are some of your columns sortable ?
+
+B - Using the ColumnBuilder, you should now add some columns to your model :
 
 <img src="/public/2-addcolumns.png"/>
 
-Building my model that way would make this if I had, for example, this kind of datas object :
+As an example, building my model that way would make sense this if I had this kind of datas object :
 
 <img src="/public/3-userdatas.png"/>
 
