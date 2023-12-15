@@ -10,7 +10,7 @@ Let's now build this model into the page component that will host your react tab
 
 **A - Instanciate the TableModel and give it a name :**
 
-<img src="/public/1-createmodel.png"/>
+<img src="/public/1-createmodel-2.png"/>
 
 This model will be key in order to define the following properties :
 
@@ -21,7 +21,7 @@ This model will be key in order to define the following properties :
 
 **B - Using the ColumnBuilder, you should now add some columns to your model :**
 
-<img src="/public/2-addcolumns.png"/>
+<img src="/public/2-addcolumns-2.png"/>
 
 As expected, with :
 
