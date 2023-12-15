@@ -8,7 +8,7 @@ The Table Model will be needed to define all the relationships between your disp
 
 Let's now build this model into the page component that will host your react table.
 
-** A - Instanciate the TableModel and give it a name : **
+**A - Instanciate the TableModel and give it a name :**
 
 <img src="/public/1-createmodel.png"/>
 
@@ -19,7 +19,7 @@ This model will be key in order to define the following properties :
 - Which name should be given to your columns (your th tag content).
 - Are some of your columns sortable ?
 
-** B - Using the ColumnBuilder, you should now add some columns to your model : **
+**B - Using the ColumnBuilder, you should now add some columns to your model :**
 
 <img src="/public/2-addcolumns.png"/>
 
@@ -46,6 +46,6 @@ I would end up with the following three sortable columns table :
 
 ## Step 2 - Using your component
 
-Now that your tableModel is defined, you can simply use our DatasTable component, passing it your tableModel and your datasObject as props :
+Now that your tableModel is defined, you can simply use our DatasTable component and passing it your tableModel and your datasObject as props :
 
-**_ img needed _**
+<img src="/public/4-component.png"/>
