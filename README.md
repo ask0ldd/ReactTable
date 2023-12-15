@@ -38,7 +38,7 @@ Here are the different methods to define your datatypes :
 
 As an example, building my model that way would make sense this if I had this kind of datas object :
 
-<img src="/public/3-userdatas.png"/>
+<img src="/public/3-userdatas-2.png"/>
 
 I would end up with the following three sortable columns table :
 
@@ -48,4 +48,4 @@ I would end up with the following three sortable columns table :
 
 Now that your tableModel is defined, you can simply use our DatasTable component and passing it your tableModel and your datasObject as props :
 
-<img src="/public/4-component.png"/>
+<img src="/public/4-component-2.png"/>
