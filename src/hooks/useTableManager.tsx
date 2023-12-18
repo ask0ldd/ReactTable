@@ -13,8 +13,23 @@ import { ITableState } from "../interfaces/ITableState"
 // The sorting rules
 // The pagination rules
 // the search string typed by the user
-//
+// !!!!!!!! should be able to define ordering functions
 // ****************************************
+
+
+/**
+ * Hook handling all the datatable interactions
+ * @Hook
+ * @param {Object[]} props - Props.
+ * @param {Object} props.tableModel
+ * @param {Object[]} props.tableModel.getColumnsNamesList - Return an array defining the columns of the table.
+ * @param {string} props.tableModel.getColumnsNamesList[].accessor - Data accessor.
+ * @param {string} props.tableModel.getColumnsNamesList[].th - Table column header.
+ * @param {boolean} props.tableModel.getColumnsNamesList[].sortable - Sortability of the column.
+ * @param {string} props.tableModel.getColumnsNamesList[].datatype - Type of the datas populating the column.
+ * @param {Object[]} props.tableDatas - Datas used to populate the table.
+ * @return (tableState, dispatch)
+ */
 function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
     
     function tableStateReducer(state : ITableState, action : { type : string, payload : any}){
@@ -87,7 +102,7 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
 
     // !!! should deal with a table having no search module, give the option passing a prop to datastable
 
-    const [tableState, dispatch] = useReducer(tableStateReducer, {...initialState/*, datas : tableDatas*/})
+    const [tableState, dispatch] = useReducer(tableStateReducer, {...initialState})
 
     return {tableState, dispatch}
 }

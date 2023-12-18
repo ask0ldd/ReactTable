@@ -46,6 +46,6 @@ I would end up with the following three sortable columns table :
 
 ## Step 2 - Using your component
 
-Now that your tableModel is defined, you can simply use our DatasTable component and passing it your tableModel and your datasObject as props :
+Now that your tableModel is defined, you can simply use our DatasTable component; passing it your tableModel and your datas Object as props :
 
 <img src="/public/4-component-2.png"/>

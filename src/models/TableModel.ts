@@ -1,7 +1,6 @@
 import { IColumnDefElement } from "../interfaces/IColumnDefElement"
 import { Column } from "./ColumnModel"
 
-// !!!!!!!! should be able to define ordering functions
 export class TableModel{
     #columns : Array<IColumnDefElement>
     #id : string

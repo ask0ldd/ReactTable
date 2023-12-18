@@ -34,8 +34,8 @@ export class TableDatasDao{
         const frCollator = new Intl.Collator('en')
         if(dataType === 'date'){
             switch(sortingRules.direction){
-               case 'asc' : return datas.sort((a,b) => dateToTime(b[sortingRules.column]) - dateToTime(a[sortingRules.column]))
-               case 'desc' : return datas.sort((a,b) => dateToTime(a[sortingRules.column]) - dateToTime(b[sortingRules.column]))
+               case 'asc' : return datas.sort((a,b) => this.#dateToTime(b[sortingRules.column]) - this.#dateToTime(a[sortingRules.column]))
+               case 'desc' : return datas.sort((a,b) => this.#dateToTime(a[sortingRules.column]) - this.#dateToTime(b[sortingRules.column]))
             }
         }
         switch(sortingRules.direction){
@@ -47,9 +47,9 @@ export class TableDatasDao{
     getProcessedDatas(processingArgs : { search : string, sorting : {column : string, direction : "asc" | "desc"}, datatype : string }){
         return this.getSortedDatas(processingArgs.search, processingArgs.sorting, processingArgs.datatype)
     }
-}
 
-function dateToTime(date : string){
-    const [day, month, year] = date.split('/')
-    return new Date(parseInt(year), parseInt(month), parseInt(day)).getTime()
+    #dateToTime(date : string){
+        const [day, month, year] = date.split('/')
+        return new Date(parseInt(year), parseInt(month), parseInt(day)).getTime()
+    }
 }

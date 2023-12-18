@@ -7,11 +7,7 @@ import { useContext } from "react"
  * Component : Datatable pagination.
  * @Component
  * @param {Object[]} props - Props.
- * @param {number} props.currentPage - Current datatable page.
- * @param {function} props.setPaginationRules - Used to navigate to the different datatable pages.
- * @param {number} props.nEntriesPerPage - Entries / results per page.
- * @param {number} props.totalEntries - Total number of entries.
- * @return ( <Pagination currentPage={currentPage} setDisplayRules={setDisplayRules} nEntriesPerPage={nEntriesPerPage} totalEntries={totalEntries}/> )
+ * @return ( <Pagination/> )
  */
 function Pagination() {
 

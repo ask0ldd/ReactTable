@@ -12,14 +12,13 @@ function NEntries(){
 
     if(!tableState) return(<></>)
 
-    // !!!!! deal with Showing 1 to 0 of 0 entries
     const firstDisplayedEntry = tableState.pagination ? Math.abs((tableState.pagination.currentPage-1)*tableState.pagination.nEntriesPerPage) + 1 : 1
-    const lastDisplayedEntry =  tableState.pagination ? Math.abs((tableState.pagination.currentPage-1)*tableState.pagination.nEntriesPerPage + tableState.pagination.nEntriesPerPage) : 10
+    const lastDisplayedEntry =  tableState.pagination ? Math.abs((tableState.pagination.currentPage)*tableState.pagination.nEntriesPerPage) : 10
     // const displayedRows = tableDatasState.slice(firstDisplayedEntry, lastDisplayedEntry).length
     const totalEntries = tableState.processedDatas.length
 
     return(
-        <div id="infosContainer">Showing {firstDisplayedEntry} to {lastDisplayedEntry < totalEntries ? lastDisplayedEntry : totalEntries} of {totalEntries} entries</div>
+        <div id="infosContainer">Showing {totalEntries != 0 ? firstDisplayedEntry : 0} to {lastDisplayedEntry < totalEntries ? lastDisplayedEntry : totalEntries} of {totalEntries} entries</div>
     )
 }
 

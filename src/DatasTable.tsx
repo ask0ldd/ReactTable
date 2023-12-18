@@ -24,7 +24,7 @@ import { DatasTableContext } from './DatasTableContext'
  * @param {Object[]} props.tableDatas - Datas used to populate the table.
  * @return ( <DatasTable tableModel={tableModel} tableDatas={tableDatas}/> )
  */
-export function DatasTable({tableModel, tableDatas} : IProps){
+function DatasTable({tableModel, tableDatas} : IProps){
 
     // check if accessors & table datas properties are matching / if not : no table displayed
     const [isColumnsDefinitionMatchingDatas, setUsColumnsDefinitionMatchingDatas] = useState(true)

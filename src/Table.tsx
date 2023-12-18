@@ -2,6 +2,8 @@
 import { useContext } from "react"
 import { DatasTableContext } from './DatasTableContext'
 import './style/Table.css'
+// import { IUsersDatas } from "../../datas/usersDatasTen"
+
 
 // !!! limit size of value in a cell & fix col sizes
 
@@ -32,6 +34,14 @@ function Table() {
     const lastDisplayedEntry =  tableState.pagination ? Math.abs((tableState.pagination.currentPage-1)*tableState.pagination.nEntriesPerPage + tableState.pagination.nEntriesPerPage) : 10
     const rowsToDisplay = [...tableState.processedDatas].slice(firstDisplayedEntry, lastDisplayedEntry)
 
+    const isRowOdd = (index : number) => {
+      return index%2 === 1 ? 'odd' : ''
+    }
+
+    const isLastRow =(index : number, lastRowIndex : number) => {
+      return index === lastRowIndex ? ' bottomblackborder' : ''
+    }
+
     return (
         <table id={tableModel.getTableId()} aria-label="Current Employees">
         <thead>
@@ -61,13 +71,3 @@ function Table() {
 }
 
 export default Table
-
-// !!! jsdoc
-function isRowOdd(index : number){
-  return index%2 === 1 ? 'odd' : ''
- }
- 
- // !!! jsdoc
- function isLastRow(index : number, lastRowIndex : number){
-   return index === lastRowIndex ? ' bottomblackborder' : ''
- }
