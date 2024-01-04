@@ -20,27 +20,9 @@ function Table() {
 
     const tableAccessors = tableModel.getAccessorsList()
     
-    function handleSortingClick(index : number){
-      // if not column marked as not sortable
-      if(!tableModel?.getColumns()[index].sortable || !dispatch || !tableState) return
-      // if clicking on an already active column, invert sorting direction
-      if(tableState.sorting.column === tableAccessors[index]) 
-        return tableState.sorting.direction === 'asc' ? dispatch({type : 'sorting', payload : {column : tableAccessors[index], direction : 'desc'}}) :  dispatch({type : 'sorting', payload : {column : tableAccessors[index], direction : 'asc'}})
-      // if clicking on a different column sorting asc by default
-      return dispatch({type : 'sorting', payload : {column : tableAccessors[index], direction : 'asc'}})
-    }
-
     const firstDisplayedEntry = tableState.pagination ? Math.abs((tableState.pagination.currentPage-1)*tableState.pagination.nEntriesPerPage) : 0
     const lastDisplayedEntry =  tableState.pagination ? Math.abs((tableState.pagination.currentPage-1)*tableState.pagination.nEntriesPerPage + tableState.pagination.nEntriesPerPage) : 10
     const rowsToDisplay = [...tableState.processedDatas].slice(firstDisplayedEntry, lastDisplayedEntry)
-
-    const isRowOdd = (index : number) => {
-      return index%2 === 1 ? 'odd' : ''
-    }
-
-    const isLastRow =(index : number, lastRowIndex : number) => {
-      return index === lastRowIndex ? ' bottomblackborder' : ''
-    }
 
     return (
         <table id={tableModel.getTableId()} aria-label="Current Employees">
@@ -68,6 +50,24 @@ function Table() {
         </tbody>
       </table>        
     )
+
+    function handleSortingClick(index : number){
+      // if not column marked as not sortable
+      if(!tableModel?.getColumns()[index].sortable || !dispatch || !tableState) return
+      // if clicking on an already active column, invert sorting direction
+      if(tableState.sorting.column === tableAccessors[index]) 
+        return tableState.sorting.direction === 'asc' ? dispatch({type : 'sorting', payload : {column : tableAccessors[index], direction : 'desc'}}) :  dispatch({type : 'sorting', payload : {column : tableAccessors[index], direction : 'asc'}})
+      // if clicking on a different column sorting asc by default
+      return dispatch({type : 'sorting', payload : {column : tableAccessors[index], direction : 'asc'}})
+    }
+
+    function isRowOdd (index : number) {
+      return index%2 === 1 ? 'odd' : ''
+    }
+
+    function isLastRow (index : number, lastRowIndex : number) {
+      return index === lastRowIndex ? ' bottomblackborder' : ''
+    }
 }
 
 export default Table

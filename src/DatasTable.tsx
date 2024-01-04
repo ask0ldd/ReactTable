@@ -6,7 +6,7 @@ import NDisplayedSelect from './NDisplayedSelect'
 import SearchModule from './SearchModule'
 import Pagination from './Pagination'
 import NEntries from './NEntries'
-import { useState, useEffect } from 'react'
+import { useMemo } from 'react'
 import { TableModel } from './models/TableModel'
 import useTableManager from './hooks/useTableManager'
 import { DatasTableContext } from './DatasTableContext'
@@ -26,14 +26,24 @@ import { DatasTableContext } from './DatasTableContext'
  */
 export function DatasTable({tableModel, tableDatas} : IProps){
 
+    // tableModel & tableDatas already triggering a re-render (being props), so no need of useState
     // check if accessors & table datas properties are matching / if not : no table displayed
-    const [isColumnsDefinitionMatchingDatas, setUsColumnsDefinitionMatchingDatas] = useState(true)
+    const isColumnsDefinitionMatchingDatas = useMemo(() => {
+        let areAllMatching = true
+        const tableDatasPropertiesList = Object.getOwnPropertyNames(tableDatas[0])
+        tableModel.getAccessorsList().forEach(accessor => {
+            if(tableDatasPropertiesList.includes(accessor) === false) areAllMatching = false // !!!!! should throw
+        })
+        return areAllMatching
+    }, [tableDatas, tableModel])
+
+    /*const [isColumnsDefinitionMatchingDatas, setUsColumnsDefinitionMatchingDatas] = useState(true)
     useEffect(() => {
         const tableDatasPropertiesList = Object.getOwnPropertyNames(tableDatas[0])
         tableModel.getAccessorsList().forEach(accessor => {
             if(tableDatasPropertiesList.includes(accessor) === false) setUsColumnsDefinitionMatchingDatas(false) // !!!!! should throw
         })
-    }, [tableDatas])
+    }, [tableDatas])*/
 
     const {tableState, dispatch} = useTableManager(tableModel, tableDatas)
 

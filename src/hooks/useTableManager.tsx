@@ -38,7 +38,8 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
         if (action.type === 'sorting' && action.payload.column && action.payload.direction) {
             // 1- gets the processing arguments from the state
             // 2- updates those with the payload
-            const processingDirectives = {...state.getProcessingArgs(), sorting : action.payload, datatype : state.tableModel.getDatatypeForAccessor(action.payload.column)}
+            const processingDirectives = {...state.getProcessingArgs(), 
+                sorting : action.payload, datatype : state.tableModel.getDatatypeForAccessor(action.payload.column)}
             return {...state, 
                 sorting : action.payload, 
                 // 3- process the datas through the dao

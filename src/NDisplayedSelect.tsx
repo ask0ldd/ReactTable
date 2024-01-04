@@ -11,7 +11,6 @@ import { useContext } from "react"
 function NDisplayedSelect() 
 {
     const NDisplayedOptions = ['10', '25', '50', '100']
-
     const {dispatch} = useContext(DatasTableContext)
 
      /* should update select active option if 100 */
@@ -20,18 +19,24 @@ function NDisplayedSelect()
     return (
         <div id="entriesContainer">
         Show
-        <select onChange={(e) => 
+        <select onChange={e => updateNumberEntriesPerPage(e)}>
             {
-                const currentPage = 1
-                const nEntriesPerPage = e.target.value != null ? parseInt(e.target.value) : 50
-                dispatch({type : "pagination", payload : {currentPage, nEntriesPerPage}})
-            }}
-        >
-            {NDisplayedOptions.map((opt, index) => (<option value={parseInt(opt)} key={'opt'+index}>{opt}</option>))}
+                // Populate the select : 10, 25, 50, 100 entries per page.
+                NDisplayedOptions.map((opt, index) => 
+                    (<option value={parseInt(opt)} key={'opt'+index}>{opt}</option>))
+            }
         </select>
         entries
     </div>
     )
+
+    function updateNumberEntriesPerPage(e : React.ChangeEvent<HTMLSelectElement>){
+        const currentPage = 1
+        const nEntriesPerPage = e.target.value != null ? parseInt(e.target.value) : 50
+        dispatch && dispatch({type : "pagination", payload : {currentPage, nEntriesPerPage}})
+    }
+
+
 }
 
 export default NDisplayedSelect

@@ -6,13 +6,11 @@ import { useContext } from "react"
 /**
  * Component : Datatable pagination.
  * @Component
- * @param {Object[]} props - Props.
  * @return ( <Pagination/> )
  */
 function Pagination() {
 
     const {tableState, dispatch} = useContext(DatasTableContext)
-
     if(!dispatch || !tableState) return(<></>)
 
     const currentPage = tableState.pagination.currentPage
@@ -21,16 +19,32 @@ function Pagination() {
     // QM = question mark
     const enoughEntriesLeftForNextPageQM =  currentPage * nEntriesPerPage < totalEntries
 
+    /*
+     * Previous Table Page.
+     * dispatch > context > useTableManager > useReducer
+     */
     function prevPage(){
-      // setPaginationRules({currentPage: currentPage > 1 ? currentPage-1 : currentPage, nEntriesPerPage: nEntriesPerPage})
       if(dispatch == null || tableState == null) return
-      dispatch({type : "pagination", payload : {...tableState.pagination, currentPage : currentPage > 1 ? currentPage-1 : currentPage}})
+      dispatch({
+        type : "pagination", 
+        payload : {
+          ...tableState.pagination, 
+          currentPage : currentPage > 1 ? currentPage-1 : currentPage
+        }})
     }
 
+    /*
+     * Next Table Page.
+     * dispatch > context > useTableManager > useReducer
+     */
     function nextPage(){
-      // setPaginationRules({currentPage: currentPage * nEntriesPerPage < totalEntries ? currentPage+1 : currentPage, nEntriesPerPage: nEntriesPerPage})
       if(dispatch == null || tableState == null) return
-      dispatch({type : "pagination", payload : {...tableState.pagination, currentPage : enoughEntriesLeftForNextPageQM ? currentPage+1 : currentPage}})
+      dispatch({
+        type : "pagination", 
+        payload : {
+          ...tableState.pagination, 
+          currentPage : enoughEntriesLeftForNextPageQM ? currentPage+1 : currentPage
+        }})
     }
 
     return (
@@ -45,9 +59,3 @@ function Pagination() {
 }
 
 export default Pagination
-
-// !!!!!!!!!!!!!!!! 
-/*interface IProps{
-  tableState : any
-  dispatch : any
-}*/
