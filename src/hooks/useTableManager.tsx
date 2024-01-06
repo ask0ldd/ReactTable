@@ -4,37 +4,28 @@ import { useReducer } from "react"
 import { TableModel } from "../models/TableModel"
 import { TableDatasDao } from "../dao/TableDatasDao"
 import { ITableState } from "../interfaces/ITableState"
-// ****************************************
-//
-// Holds :
-//
-// The processed datas needed to fill the table (after filtering and sorting)
-// The tabledatasdao keeping the untainted datas and holding the methods to process them
-// The sorting rules
-// The pagination rules
-// the search string typed by the user
-// !!!!!!!! should be able to define ordering functions
-// ****************************************
-
 
 /**
  * Hook handling all the datatable interactions
  * @Hook
- * @param {Object[]} props - Props.
- * @param {Object} props.tableModel
- * @param {Object[]} props.tableModel.getColumnsNamesList - Return an array defining the columns of the table.
- * @param {string} props.tableModel.getColumnsNamesList[].accessor - Data accessor.
- * @param {string} props.tableModel.getColumnsNamesList[].th - Table column header.
- * @param {boolean} props.tableModel.getColumnsNamesList[].sortable - Sortability of the column.
- * @param {string} props.tableModel.getColumnsNamesList[].datatype - Type of the datas populating the column.
- * @param {Object[]} props.tableDatas - Datas used to populate the table.
+ * @param {Object} tableModel - Object defining the structure of the Table.
+ * @param {Object[]} tableModel.getColumnsNamesList - Return an array of all column names (<th> inner text).
+ * @param {Object[]} tableModel.getAccessorsList - Return an array of all the accessors.
+ * @param {Object[]} tableModel.getColumns - Return an array of all columns (w/ accessor, column names, sortable, datatype).
+ * @param {string} tableModel.getDatatypeForAccessor - Type of the datas populating the column.
+ * @param {Object[]} tableDatas - Datas used to populate the table.
  * @return (tableState, dispatch)
  */
 function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
     
+    /**
+     * Reduces the table state based on the action performed.
+     * @param {ITableState} state - The current state of the table.
+     * @param {{ type: string, payload: any}} action - The action performed on the table.
+     */
     function tableStateReducer(state : ITableState, action : { type : string, payload : any}){
 
-        // table datas sorting
+        // sorting the table using a column and a direction
         if (action.type === 'sorting' && action.payload.column && action.payload.direction) {
             // 1- gets the processing arguments from the state
             // 2- updates those with the payload
@@ -47,14 +38,15 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
             }
         }
 
-        // table datas pagination
+        // update the table pagination
         if (action.type === 'pagination' && action.payload.currentPage && action.payload.nEntriesPerPage) {
             return {...state, pagination : action.payload}
         }
 
-        // table datas filtering
+        // using the string in the search field to update the state with the wanted filtered datas
         if (action.type === 'search') {
-            // 1- gets the processing arguments from the state
+            // 1- gets the processing arguments from the state 
+            // getProcessingArgs : () => { search : string, datatype : string, sorting : ISorting }
             // 2- updates those with the payload
             const processingDirectives = {...state.getProcessingArgs(), search : action.payload}
             return {...state, 
@@ -66,7 +58,7 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
             }
         }
 
-        // add a row
+        // add a row to the table
         if(action.type === 'addrow' && action.payload){
             const newRow = action.payload
 
@@ -95,13 +87,11 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
         tableDatasDao : new TableDatasDao(tableDatas),
         processedDatas : tableDatas,
         tableModel : tableModel,
-        // grouping all the right arguments so the TableDatasDao can send back the processed datas
+        // get all the right arguments to pass the TableDatasDao so the filtered/sorted datas can be sent back
         getProcessingArgs() {
             return {search : this.search, datatype : this.tableModel.getDatatypeForAccessor(this.sorting.column), sorting : this.sorting}
         }
     }
-
-    // !!! should deal with a table having no search module, give the option passing a prop to datastable
 
     const [tableState, dispatch] = useReducer(tableStateReducer, {...initialState})
 
@@ -111,3 +101,7 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
 export default useTableManager
 
 export type reducerDispatchType = React.Dispatch<{type: string, payload: any}>
+
+// FUTURE IMPROVEMENTS
+// !!! should deal with a table having no search module, give the option passing a prop to datastable
+// !!!!!!!! should be able to define ordering functions

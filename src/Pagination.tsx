@@ -49,11 +49,11 @@ function Pagination() {
 
     return (
         <div id="paginationContainer">
-          {currentPage > 1 && <span style={{marginRight:'0.5rem'}} onClick={() => prevPage()}>Previous</span>}
-          {currentPage > 1 && <div className="paginationInactivePage" onClick={() => prevPage()}>{currentPage-1}</div>}
-          <div className="paginationActivePage">{currentPage}</div>
-          {enoughEntriesLeftForNextPageQM && <div className="paginationInactivePage" onClick={() => nextPage()}>{currentPage+1}</div>}
-          {enoughEntriesLeftForNextPageQM && <span style={{marginLeft:'0.5rem'}} onClick={() => nextPage()}>Next</span>}
+          {currentPage > 1 && <span tabIndex={0} style={{marginRight:'0.5rem'}} onClick={() => prevPage()}>Previous</span>}
+          {currentPage > 1 && <div tabIndex={0} className="paginationInactivePage" onClick={() => prevPage()}>{currentPage-1}</div>}
+          <div tabIndex={0} className="paginationActivePage">{currentPage}</div>
+          {enoughEntriesLeftForNextPageQM && <div tabIndex={0} className="paginationInactivePage" onClick={() => nextPage()}>{currentPage+1}</div>}
+          {enoughEntriesLeftForNextPageQM && <span tabIndex={0} style={{marginLeft:'0.5rem'}} onClick={() => nextPage()}>Next</span>}
         </div>
     )
 }

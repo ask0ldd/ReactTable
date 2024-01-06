@@ -36,7 +36,7 @@ Here are the different methods to define your datatypes :
 - setDatatypeAsNumber()
 - setDatatypeAsDate()
 
-As an example, building my model that way would make sense this if I had this kind of datas object :
+As an example, building my model this way apply for such a datas object :
 
 <img src="/public/3-userdatas-2.png"/>
 

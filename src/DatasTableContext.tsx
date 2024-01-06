@@ -7,7 +7,6 @@ const initialContext : IDatasTableContext = {}
 
 export const DatasTableContext = createContext<IDatasTableContext>(initialContext)
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface IDatasTableContext{
     tableModel? : TableModel
     dispatch? : reducerDispatchType

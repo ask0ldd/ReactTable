@@ -16,40 +16,34 @@ import { DatasTableContext } from './DatasTableContext'
  * @Component
  * @param {Object[]} props - Props.
  * @param {Object} props.tableModel
- * @param {Object[]} props.tableModel.getColumnsNamesList - Return an array defining the columns of the table.
- * @param {string} props.tableModel.getColumnsNamesList[].accessor - Data accessor.
- * @param {string} props.tableModel.getColumnsNamesList[].th - Table column header.
- * @param {boolean} props.tableModel.getColumnsNamesList[].sortable - Sortability of the column.
- * @param {string} props.tableModel.getColumnsNamesList[].datatype - Type of the datas populating the column.
+ * @param {Object[]} props.tableModel.getColumns - Return an array defining the columns of the table.
+ * @param {string} props.tableModel.getColumns[].accessor - Data accessor.
+ * @param {string} props.tableModel.getColumns[].th - Table column header.
+ * @param {boolean} props.tableModel.getColumns[].sortable - Sortability of the column.
+ * @param {string} props.tableModel.getColumns[].datatype - Type of the datas populating the column.
  * @param {Object[]} props.tableDatas - Datas used to populate the table.
  * @return ( <DatasTable tableModel={tableModel} tableDatas={tableDatas}/> )
  */
 export function DatasTable({tableModel, tableDatas} : IProps){
 
-    // tableModel & tableDatas already triggering a re-render (being props), so no need of useState
+    // [perfs] tableModel & tableDatas already triggering a re-render (being props), so no need of useState
     // check if accessors & table datas properties are matching / if not : no table displayed
     const isColumnsDefinitionMatchingDatas = useMemo(() => {
         let areAllMatching = true
         const tableDatasPropertiesList = Object.getOwnPropertyNames(tableDatas[0])
         tableModel.getAccessorsList().forEach(accessor => {
-            if(tableDatasPropertiesList.includes(accessor) === false) areAllMatching = false // !!!!! should throw
+            if(tableDatasPropertiesList.includes(accessor) === false) areAllMatching = false
+            if(!areAllMatching) throw new Error("Some Accessors don't exist into the provided Dataset.")
         })
         return areAllMatching
     }, [tableDatas, tableModel])
-
-    /*const [isColumnsDefinitionMatchingDatas, setUsColumnsDefinitionMatchingDatas] = useState(true)
-    useEffect(() => {
-        const tableDatasPropertiesList = Object.getOwnPropertyNames(tableDatas[0])
-        tableModel.getAccessorsList().forEach(accessor => {
-            if(tableDatasPropertiesList.includes(accessor) === false) setUsColumnsDefinitionMatchingDatas(false) // !!!!! should throw
-        })
-    }, [tableDatas])*/
 
     const {tableState, dispatch} = useTableManager(tableModel, tableDatas)
 
     return(
         <>
             {isColumnsDefinitionMatchingDatas ? 
+            // distributing model, datas & dispatch fn to the children components
             <DatasTableContext.Provider value={{tableModel, dispatch, tableState}}>
                 <div id="entriesNSearchContainer">
                     <NDisplayedSelect/>

@@ -41,7 +41,7 @@ function Table() {
         </thead>
         <tbody>
           {[...rowsToDisplay].map((datarow, index) => (
-            <tr key={'trtable-'+index} className={isRowOdd(index) + isLastRow(index, rowsToDisplay.length-1) /* use css 2*n+1 */}>
+            <tr key={'trtable-'+index} className={isRowOdd(index) + isLastRow(index, rowsToDisplay.length-1) /* !!! use css 2*n+1 */}>
               {[...tableAccessors].map((key : string) => (
                 <td key={'tdtable-'+key+'-'+index}>{datarow[key as keyof typeof datarow]}</td>
               ))}
@@ -51,6 +51,11 @@ function Table() {
       </table>        
     )
 
+    /**
+     * Sorting the table after clicking on a column header
+     * @param {number} index - index of the column into the table model.
+     * @return
+     */
     function handleSortingClick(index : number){
       // if not column marked as not sortable
       if(!tableModel?.getColumns()[index].sortable || !dispatch || !tableState) return
@@ -61,10 +66,20 @@ function Table() {
       return dispatch({type : 'sorting', payload : {column : tableAccessors[index], direction : 'asc'}})
     }
 
+    /**
+     * Determine which style should be applied to the target row.
+     * @param {number} index - index of a table row.
+     * @return {string} - the styles class to associate to this row.
+     */
     function isRowOdd (index : number) {
       return index%2 === 1 ? 'odd' : ''
     }
 
+    /**
+     * Return a specific style if the target row is the last one.
+     * @param {number} index - index of a table row.
+     * @return {string} - the style to associate to this row if it is the last one.
+     */
     function isLastRow (index : number, lastRowIndex : number) {
       return index === lastRowIndex ? ' bottomblackborder' : ''
     }

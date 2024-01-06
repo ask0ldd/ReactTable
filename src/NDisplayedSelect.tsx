@@ -30,6 +30,10 @@ function NDisplayedSelect()
     </div>
     )
 
+    /**
+     * Update the number of entries per page.
+     * @param {React.ChangeEvent<HTMLSelectElement>} e - The event object.
+     */
     function updateNumberEntriesPerPage(e : React.ChangeEvent<HTMLSelectElement>){
         const currentPage = 1
         const nEntriesPerPage = e.target.value != null ? parseInt(e.target.value) : 50
