@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DatasTableContext } from './DatasTableContext'
+import { ITableState } from './interfaces/ITableState'
 import './style/Pagination.css'
 import { useContext } from "react"
 
@@ -16,14 +17,15 @@ function Pagination() {
     const currentPage = tableState.pagination.currentPage
     const nEntriesPerPage = tableState.pagination.nEntriesPerPage
     const totalEntries = tableState.processedDatas.length
-    // QM = question mark
-    const enoughEntriesLeftForNextPageQM =  currentPage * nEntriesPerPage < totalEntries
+    
+    const enoughEntriesLeftForNextPage =  currentPage * nEntriesPerPage < totalEntries
 
     /*
      * Previous Table Page.
-     * dispatch > context > useTableManager > useReducer
+     * dispatch : fn saved in DatasTableContext
+     * interacts with the reducer in useTableManager
      */
-    function prevPage(){
+    function prevPage(tableState : ITableState) : void {
       if(dispatch == null || tableState == null) return
       dispatch({
         type : "pagination", 
@@ -35,25 +37,26 @@ function Pagination() {
 
     /*
      * Next Table Page.
-     * dispatch > context > useTableManager > useReducer
+     * dispatch : fn saved in DatasTableContext
+     * interacts with the reducer in useTableManager
      */
-    function nextPage(){
+    function nextPage(tableState : ITableState) : void {
       if(dispatch == null || tableState == null) return
       dispatch({
         type : "pagination", 
         payload : {
           ...tableState.pagination, 
-          currentPage : enoughEntriesLeftForNextPageQM ? currentPage+1 : currentPage
+          currentPage : enoughEntriesLeftForNextPage ? currentPage+1 : currentPage
         }})
     }
 
     return (
         <div id="paginationContainer">
-          {currentPage > 1 && <span tabIndex={0} style={{marginRight:'0.5rem'}} onClick={() => prevPage()}>Previous</span>}
-          {currentPage > 1 && <div tabIndex={0} className="paginationInactivePage" onClick={() => prevPage()}>{currentPage-1}</div>}
+          {currentPage > 1 && <span tabIndex={0} style={{marginRight:'0.5rem'}} onClick={() => prevPage(tableState)}>Previous</span>}
+          {currentPage > 1 && <div tabIndex={0} className="paginationInactivePage" onClick={() => prevPage(tableState)}>{currentPage-1}</div>}
           <div tabIndex={0} className="paginationActivePage">{currentPage}</div>
-          {enoughEntriesLeftForNextPageQM && <div tabIndex={0} className="paginationInactivePage" onClick={() => nextPage()}>{currentPage+1}</div>}
-          {enoughEntriesLeftForNextPageQM && <span tabIndex={0} style={{marginLeft:'0.5rem'}} onClick={() => nextPage()}>Next</span>}
+          {enoughEntriesLeftForNextPage && <div tabIndex={0} className="paginationInactivePage" onClick={() => nextPage(tableState)}>{currentPage+1}</div>}
+          {enoughEntriesLeftForNextPage && <span tabIndex={0} style={{marginLeft:'0.5rem'}} onClick={() => nextPage(tableState)}>Next</span>}
         </div>
     )
 }

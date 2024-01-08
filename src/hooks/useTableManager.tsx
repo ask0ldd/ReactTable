@@ -2,13 +2,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useReducer } from "react"
 import { TableModel } from "../models/TableModel"
-import { TableDatasDao } from "../dao/TableDatasDao"
+import { TableDAO } from "../dao/TableDAO"
 import { ITableState } from "../interfaces/ITableState"
 
 /**
  * Hook handling all the datatable interactions
  * @Hook
  * @param {Object} tableModel - Object defining the structure of the Table.
+ * @param {String} tableModel.id - model ID.
+ * @param {IColumnDefElement[]} tableModel.columns - Columns full definition.
  * @param {Object[]} tableModel.getColumnsNamesList - Return an array of all column names (<th> inner text).
  * @param {Object[]} tableModel.getAccessorsList - Return an array of all the accessors.
  * @param {Object[]} tableModel.getColumns - Return an array of all columns (w/ accessor, column names, sortable, datatype).
@@ -17,6 +19,20 @@ import { ITableState } from "../interfaces/ITableState"
  * @return (tableState, dispatch)
  */
 function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
+
+    const initialState : ITableState = {
+        sorting : {column : '', direction : 'asc'}, 
+        pagination : {currentPage : 1, nEntriesPerPage : 10},
+        search : "",
+        tableDAO : new TableDAO(tableDatas),
+        // sorted and filtered datas
+        processedDatas : tableDatas,
+        tableModel : tableModel,
+        // get all the right arguments to pass the TableDAO so the filtered/sorted datas can be sent back
+        getProcessingArgs() {
+            return {search : this.search, datatype : this.tableModel.getDatatypeForAccessor(this.sorting.column), sorting : this.sorting}
+        }
+    }
     
     /**
      * Reduces the table state based on the action performed.
@@ -25,7 +41,7 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
      */
     function tableStateReducer(state : ITableState, action : { type : string, payload : any}){
 
-        // sorting the table using a column and a direction
+        // sorting the table using a column & a direction
         if (action.type === 'sorting' && action.payload.column && action.payload.direction) {
             // 1- gets the processing arguments from the state
             // 2- updates those with the payload
@@ -34,7 +50,7 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
             return {...state, 
                 sorting : action.payload, 
                 // 3- process the datas through the dao
-                processedDatas : state.tableDatasDao.getProcessedDatas(processingDirectives)
+                processedDatas : state.tableDAO.getProcessedDatas(processingDirectives)
             }
         }
 
@@ -43,7 +59,7 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
             return {...state, pagination : action.payload}
         }
 
-        // using the string in the search field to update the state with the wanted filtered datas
+        // using the search field string to update the state with new filtered datas
         if (action.type === 'search') {
             // 1- gets the processing arguments from the state 
             // getProcessingArgs : () => { search : string, datatype : string, sorting : ISorting }
@@ -54,7 +70,7 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
                 // when typing into the searchbar => the current page is set back to 1
                 pagination : {...state.pagination , currentPage : 1},
                 // 3- process the datas through the dao
-                processedDatas : state.tableDatasDao.getProcessedDatas(processingDirectives)
+                processedDatas : state.tableDAO.getProcessedDatas(processingDirectives)
             }
         }
 
@@ -70,27 +86,14 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
                 if(newRowPropertiesList.includes(accessor) === false) return state // !!!!! should throw
             })
 
-            state.tableDatasDao.addRow(newRow)
+            state.tableDAO.addRow(newRow)
             return {
                 ...state,
-                processedDatas : state.tableDatasDao.getProcessedDatas(state.getProcessingArgs())
+                processedDatas : state.tableDAO.getProcessedDatas(state.getProcessingArgs())
             }
         }
 
         return state
-    }
-
-    const initialState : ITableState = {
-        sorting : {column : '', direction : 'asc'}, 
-        pagination : {currentPage : 1, nEntriesPerPage : 10},
-        search : "",
-        tableDatasDao : new TableDatasDao(tableDatas),
-        processedDatas : tableDatas,
-        tableModel : tableModel,
-        // get all the right arguments to pass the TableDatasDao so the filtered/sorted datas can be sent back
-        getProcessingArgs() {
-            return {search : this.search, datatype : this.tableModel.getDatatypeForAccessor(this.sorting.column), sorting : this.sorting}
-        }
     }
 
     const [tableState, dispatch] = useReducer(tableStateReducer, {...initialState})

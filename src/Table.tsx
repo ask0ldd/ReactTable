@@ -2,8 +2,6 @@
 import { useContext } from "react"
 import { DatasTableContext } from './DatasTableContext'
 import './style/Table.css'
-// import { IUsersDatas } from "../../datas/usersDatasTen"
-
 
 // !!! limit size of value in a cell & fix col sizes
 
@@ -57,12 +55,12 @@ function Table() {
      * @return
      */
     function handleSortingClick(index : number){
-      // if not column marked as not sortable
+      // if not column not sortable
       if(!tableModel?.getColumns()[index].sortable || !dispatch || !tableState) return
       // if clicking on an already active column, invert sorting direction
       if(tableState.sorting.column === tableAccessors[index]) 
         return tableState.sorting.direction === 'asc' ? dispatch({type : 'sorting', payload : {column : tableAccessors[index], direction : 'desc'}}) :  dispatch({type : 'sorting', payload : {column : tableAccessors[index], direction : 'asc'}})
-      // if clicking on a different column sorting asc by default
+      // if clicking on a different column sorting direction = asc by default
       return dispatch({type : 'sorting', payload : {column : tableAccessors[index], direction : 'asc'}})
     }
 
@@ -71,7 +69,7 @@ function Table() {
      * @param {number} index - index of a table row.
      * @return {string} - the styles class to associate to this row.
      */
-    function isRowOdd (index : number) {
+    function isRowOdd (index : number) : string {
       return index%2 === 1 ? 'odd' : ''
     }
 
