@@ -37,7 +37,8 @@ td {
 
 tbody tr:hover {
   /*background: linear-gradient(#efe8f1, #faf6fc);*/
-  background-color: #0078d7aa;
+  /*background-color: #0078d7aa;*/
+  background: linear-gradient(360deg, #2c91e4dd, #2c91e4bb);
   color: #fff;
   /*border-bottom: 1px solid #213547;*/
 }

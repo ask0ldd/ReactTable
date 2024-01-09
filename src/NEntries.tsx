@@ -13,7 +13,7 @@ function NEntries(){
 
     const firstDisplayedEntry = tableState.pagination ? Math.abs((tableState.pagination.currentPage-1)*tableState.pagination.nEntriesPerPage) + 1 : 1
     const lastDisplayedEntry =  tableState.pagination ? Math.abs((tableState.pagination.currentPage)*tableState.pagination.nEntriesPerPage) : 10
-    const totalEntries = tableState.processedDatas.length
+    const totalEntries = tableState.tableDAO.getProcessedDatas(tableState.getProcessingParameters()).length
 
     // first Entry displayed to last Entry displayed of total Entries
     return(

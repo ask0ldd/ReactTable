@@ -25,11 +25,9 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
         pagination : {currentPage : 1, nEntriesPerPage : 10},
         search : "",
         tableDAO : new TableDAO(tableDatas),
-        // sorted and filtered datas
-        processedDatas : tableDatas,
         tableModel : tableModel,
         // get all the right arguments to pass the TableDAO so the filtered/sorted datas can be sent back
-        getProcessingArgs() {
+        getProcessingParameters() {
             return {search : this.search, datatype : this.tableModel.getDatatypeForAccessor(this.sorting.column), sorting : this.sorting}
         }
     }
@@ -43,34 +41,20 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
 
         // sorting the table using a column & a direction
         if (action.type === 'sorting' && action.payload.column && action.payload.direction) {
-            // 1- gets the processing arguments from the state
-            // 2- updates those with the payload
-            const processingDirectives = {...state.getProcessingArgs(), 
-                sorting : action.payload, datatype : state.tableModel.getDatatypeForAccessor(action.payload.column)}
-            return {...state, 
-                sorting : action.payload, 
-                // 3- process the datas through the dao
-                processedDatas : state.tableDAO.getProcessedDatas(processingDirectives)
-            }
+            return { ...state, sorting : action.payload }
         }
 
         // update the table pagination
         if (action.type === 'pagination' && action.payload.currentPage && action.payload.nEntriesPerPage) {
-            return {...state, pagination : action.payload}
+            return { ...state, pagination : action.payload }
         }
 
         // using the search field string to update the state with new filtered datas
         if (action.type === 'search') {
-            // 1- gets the processing arguments from the state 
-            // getProcessingArgs : () => { search : string, datatype : string, sorting : ISorting }
-            // 2- updates those with the payload
-            const processingDirectives = {...state.getProcessingArgs(), search : action.payload}
             return {...state, 
                 search : action.payload, 
                 // when typing into the searchbar => the current page is set back to 1
-                pagination : {...state.pagination , currentPage : 1},
-                // 3- process the datas through the dao
-                processedDatas : state.tableDAO.getProcessedDatas(processingDirectives)
+                pagination : { ...state.pagination , currentPage : 1 },
             }
         }
 
@@ -78,7 +62,7 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
         if(action.type === 'addrow' && action.payload){
             const newRow = action.payload
 
-            // check if newrow keys and table accessors are matching
+            // check if the new row contains all the required columns
             const accessors = state.tableModel.getAccessorsList()
             const newRowPropertiesList = Object.getOwnPropertyNames(newRow)
             if(accessors.length !== newRowPropertiesList.length) return state
@@ -87,10 +71,7 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
             })
 
             state.tableDAO.addRow(newRow)
-            return {
-                ...state,
-                processedDatas : state.tableDAO.getProcessedDatas(state.getProcessingArgs())
-            }
+            return { ...state }
         }
 
         return state

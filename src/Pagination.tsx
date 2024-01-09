@@ -16,7 +16,7 @@ function Pagination() {
 
     const currentPage = tableState.pagination.currentPage
     const nEntriesPerPage = tableState.pagination.nEntriesPerPage
-    const totalEntries = tableState.processedDatas.length
+    const totalEntries = tableState.tableDAO.getProcessedDatas(tableState.getProcessingParameters()).length
     
     const enoughEntriesLeftForNextPage =  currentPage * nEntriesPerPage < totalEntries
 

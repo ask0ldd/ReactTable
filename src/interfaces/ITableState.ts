@@ -9,7 +9,7 @@ export interface ITableState {
     pagination : IPaginationRules
     search : string
     tableDAO : TableDAO
-    processedDatas : Array<any>
+    // processedDatas : Array<any>
     tableModel : TableModel
-    getProcessingArgs : () => { search : string, datatype : string, sorting : ISorting }
+    getProcessingParameters : () => { search : string, datatype : string, sorting : ISorting }
 }
