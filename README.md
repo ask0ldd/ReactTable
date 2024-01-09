@@ -21,7 +21,7 @@ This model will be key in order to define the following properties :
 
 **B - Using the ColumnBuilder, you should now add some columns to your model :**
 
-<img src="/public/2-addcolumns-2.png"/>
+<img src="/public/2-addcolumns-3.png"/>
 
 As expected, with :
 
