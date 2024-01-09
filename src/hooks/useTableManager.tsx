@@ -26,7 +26,7 @@ function useTableManager(tableModel : TableModel, tableDatas : Array<any>){
         search : "",
         tableDAO : new TableDAO(tableDatas),
         tableModel : tableModel,
-        // get all the right arguments to pass the TableDAO so the filtered/sorted datas can be sent back
+        // group all the right arguments to pass to the TableDAO so it can reply back w/ the expected filtered/sorted datas
         getProcessingParameters() {
             return {search : this.search, datatype : this.tableModel.getDatatypeForAccessor(this.sorting.column), sorting : this.sorting}
         }
@@ -88,4 +88,4 @@ export type reducerDispatchType = React.Dispatch<{type: string, payload: any}>
 
 // FUTURE IMPROVEMENTS
 // !!! should deal with a table having no search module, give the option passing a prop to datastable
-// !!!!!!!! should be able to define ordering functions
+// !!!!!!!! should be able to define overriding ordering functions

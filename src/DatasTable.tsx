@@ -43,7 +43,7 @@ export function DatasTable({tableModel, tableDatas} : IProps){
     return(
         <>
             {isColumnsDefinitionMatchingDatas ? 
-            // distributing model, datas & dispatch fn to the children components
+            // providing model, datas & dispatch fn to the children components
             <DatasTableContext.Provider value={{tableModel, dispatch, tableState}}>
                 <div id="entriesNSearchContainer">
                     <NDisplayedSelect/>

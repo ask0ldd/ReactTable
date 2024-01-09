@@ -13,21 +13,21 @@ function NDisplayedSelect()
     const NDisplayedOptions = ['10', '25', '50', '100']
     const {dispatch} = useContext(DatasTableContext)
 
-     /* should update select active option if 100 */
+    /* should update select active option if 100 */
     if(!dispatch) return(<></>)
 
     return (
         <div id="entriesContainer">
-        Show
-        <select onChange={e => updateNumberEntriesPerPage(e)}>
-            {
-                // Populate the select : 10, 25, 50, 100 entries per page.
-                NDisplayedOptions.map((opt, index) => 
-                    (<option value={parseInt(opt)} key={'opt'+index}>{opt}</option>))
-            }
-        </select>
-        entries
-    </div>
+            Show
+            <select onChange={e => updateNumberEntriesPerPage(e)}>
+                {
+                    // Select w/ 10, 25, 50, 100 entries per page.
+                    NDisplayedOptions.map((opt, index) => 
+                        (<option value={parseInt(opt)} key={'opt'+index}>{opt}</option>))
+                }
+            </select>
+            entries
+        </div>
     )
 
     /**
