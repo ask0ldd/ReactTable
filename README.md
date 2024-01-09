@@ -21,14 +21,14 @@ This model will be key in order to define the following properties :
 
 **B - Using the ColumnBuilder, you should now add some columns to your model :**
 
-<img src="/public/2-addcolumns-3.png"/>
+<img src="/public/2-addcolumns-4.png"/>
 
 As expected, with :
 
 - setColumnName() : I give a name to my column.
 - setDatatypeAsString() : I define the type of datas that should populate my column. Here it should be populated with strings.
 - setAccessor() : I tell my model which key in my datas object is associated with the value needed to fill my column.
-- SetSortability() : I indicates to my model if this column should be sortable.
+- SetSortability() : I indicate to my model if this column should be sortable or not.
 
 Here are the different methods to define your datatypes :
 
@@ -38,7 +38,7 @@ Here are the different methods to define your datatypes :
 
 As an example, building my model this way apply for such a datas object :
 
-<img src="/public/3-userdatas-2.png"/>
+<img src="/public/3-userdatas-3.png"/>
 
 I would end up with the following three sortable columns table :
 

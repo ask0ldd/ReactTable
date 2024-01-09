@@ -1,6 +1,6 @@
 {
   "name": "@asklddco/react-table",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "A simple component library to demonstrate publishing to npm",
   "main": "index.js",
   "scripts": {
