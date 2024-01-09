@@ -1,5 +1,9 @@
 React Table Component Package (WIP)
 
+Forthcoming update : Color & Font Customisation + Various Presets.
+
+On NPM : @asklddco/react-table
+
 DOCUMENTATION
 
 ## Step 1 - Build your Table Model

@@ -1,17 +1,20 @@
 import { Column } from "../models/ColumnModel"
 
+/**
+ * Class representing a column builder.
+ */
 export class ColumnBuilder {
 
-    static #th : string | null = null
-    static #accessor : string | null = null
-    static #sortable = false
-    static #datatype : "string" | "number" | "date" | null = null
+    #th : string | null = null
+    #accessor : string | null = null
+    #sortable = false
+    #datatype : "string" | "number" | "date" | null = null
   
     /**
      * Start building a new column.
      * @returns {ColumnBuilder} - The column builder instance.
      */
-    static startBuilder(){
+    constructor(){
       this.#th = null
       this.#accessor = null
       this.#sortable = false
@@ -24,7 +27,7 @@ export class ColumnBuilder {
      * @param {string} th - The text for the th tag.
      * @returns {ColumnBuilder} - The column builder instance.
      */
-    static setColumnName(th : string){
+    setColumnName(th : string){
       this.#th = th
       return this
     }
@@ -34,7 +37,7 @@ export class ColumnBuilder {
      * @param {string} accessor - The key for the data object.
      * @returns {ColumnBuilder} - The column builder instance.
      */
-    static setAccessor(accessor : string){
+    setAccessor(accessor : string){
       this.#accessor = accessor
       return this
     }
@@ -44,7 +47,7 @@ export class ColumnBuilder {
      * @param {boolean} sortable - Whether the column should be sortable.
      * @returns {ColumnBuilder} - The column builder instance.
      */
-    static setSortability(sortable : boolean){
+    setSortability(sortable : boolean){
       this.#sortable = sortable
       return this
     }
@@ -54,7 +57,7 @@ export class ColumnBuilder {
      * @param {"string" | "number" | "date"} datatype - The type of data for the column.
      * @returns {ColumnBuilder} - The column builder instance.
      */
-    static setDatatype(datatype : "string" | "number" | "date"){
+    setDatatype(datatype : "string" | "number" | "date"){
       this.#datatype = datatype
       return this
     }
@@ -63,7 +66,7 @@ export class ColumnBuilder {
      * Set the data type of the column as a string.
      * @returns {ColumnBuilder}
      */
-    static setDatatypeAsString(){
+    setDatatypeAsString(){
       this.#datatype = "string"
       return this
     }
@@ -72,7 +75,7 @@ export class ColumnBuilder {
      * Set the data type of the column as a number.
      * @returns {ColumnBuilder}
      */
-    static setDatatypeAsNumber(){
+    setDatatypeAsNumber(){
       this.#datatype = "number"
       return this
     }
@@ -81,7 +84,7 @@ export class ColumnBuilder {
      * Set the data type of the column as a date.
      * @returns {ColumnBuilder}
      */
-    static setDatatypeAsDate(){
+    setDatatypeAsDate(){
       this.#datatype = "date"
       return this
     }
@@ -90,7 +93,7 @@ export class ColumnBuilder {
      * Build the final column.
      * @returns {Column|undefined} - The built column, or undefined if the column definition is incomplete.
      */
-    static build(){
+    build(){
       try{
         if(this.#th == null || this.#accessor == null || this.#datatype == null ) throw new Error("Can't be built : Column definition incomplete.")
         return new Column(this.#th, this.#accessor, this.#sortable, this.#datatype)
