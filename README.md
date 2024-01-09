@@ -42,10 +42,16 @@ As an example, building my model this way apply for such a datas object :
 
 I would end up with the following three sortable columns table :
 
-**_ img needed _**
+<img src="/public/5-tableexample.png"/>
 
 ## Step 2 - Using your component
 
 Now that your tableModel is defined, you can simply use our DatasTable component; passing it your tableModel and your datas Object as props :
 
 <img src="/public/4-component-2.png"/>
+
+## Subcomponents
+
+All those components are integrated by default to the Table component.
+
+<img src="/public/6-subcomponents.png">
