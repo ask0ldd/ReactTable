@@ -14,7 +14,8 @@ function Table() {
 
     const {tableState, dispatch, tableModel} = useContext(DatasTableContext)
 
-    if(!dispatch || !tableState || !tableModel) return(<></>)
+    if(!dispatch || !tableState || !tableModel || tableState.tableDAO.getProcessedDatas(tableState.getProcessingParameters()).length === 0) 
+      return(<>No data available in table.</>)
 
     const tableAccessors = tableModel.getAccessorsList()
     

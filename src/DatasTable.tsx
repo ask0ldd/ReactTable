@@ -29,6 +29,9 @@ export function DatasTable({tableModel, tableDatas} : IProps){
     // [perfs] tableModel & tableDatas props already triggering a re-render (being props), so no need of useState
     // check if accessors & table datas properties are matching / if not : no table displayed
     const isColumnsDefinitionMatchingDatas = useMemo(() => {
+
+        if(tableDatas.length === 0) return false
+        
         let areAllMatching = true
         const tableDatasPropertiesList = Object.getOwnPropertyNames(tableDatas[0])
         tableModel.getAccessorsList().forEach(accessor => {
