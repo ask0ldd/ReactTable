@@ -18,10 +18,10 @@ Let's now build this model into the react page component that will host your rea
 
 This model will be key in order to define the following properties :
 
-    - Which specific datas should be extracted from your data object.
-    - Of which types those datas are. Mandatory since it will auto-define a sorting algorithm (sortability being activated or not).
-    - Which name should be given to your columns (your '< th >' tag content).
-    - Are some of your columns sortable ?
+- Which specific datas should be extracted from your data object.
+- Of which types those datas are. Mandatory since it will auto-define a sorting algorithm (sortability being activated or not).
+- Which name should be given to your columns (your '< th >' tag content).
+- Are some of your columns sortable ?
 
 **B - Using the ColumnBuilder, you should now add some columns to your model :**
 
@@ -29,16 +29,16 @@ This model will be key in order to define the following properties :
 
 As expected, with :
 
-    - setColumnName() : We give a name to our column.
-    - setDatatypeAsString() : We define the data type that should populate my column. Here it should be populated with strings.
-    - setAccessor() : We specifie the key in the data object associated with the value needed to fill the column.
-    - SetSortability() : We indicate to our model if our column should be sortable or not.
+- <b>setColumnName()</b> : We give a name to our column.
+- <b>setDatatypeAsString()</b> : We define the data type that should populate my column. Here it should be populated with strings.
+- <b>setAccessor()</b> : We specifie the key in the data object associated with the value needed to fill the column.
+- <b>SetSortability()</b> : We indicate to our model if our column should be sortable or not.
 
 Here are the different methods to define your datatypes :
 
-    - setDatatypeAsString()
-    - setDatatypeAsNumber()
-    - setDatatypeAsDate()
+- setDatatypeAsString()
+- setDatatypeAsNumber()
+- setDatatypeAsDate()
 
 As an example, building this model would qualify for such a data object :
 
@@ -50,7 +50,7 @@ And you would then end up with the following three sortable columns table :
 
 ## Step 2 - Using your component
 
-Now that your tableModel is defined, you can simply use our DatasTable component. You only need to pass it your model and your data object as follow :
+Now that your tableModel is defined, you can simply use our DatasTable component. Pass it your built model and your data object as follow :
 
 <img src="/public/4-component-2.png"/>
 
